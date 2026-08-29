@@ -62,6 +62,7 @@ def parse_file(
     path: str | Path,
     *,
     env: Mapping[str, str] | None = None,
+    resolve_conditionals: bool = True,
 ) -> Document:
     """Parse a single file. Does not load included files."""
     path = Path(path)
@@ -70,6 +71,7 @@ def parse_file(
         text,
         source=_source_name(path),
         env=os.environ if env is None else env,
+        resolve_conditionals=resolve_conditionals,
     )
 
 
@@ -78,11 +80,13 @@ def parse_text(
     *,
     source: str = "<string>",
     env: Mapping[str, str] | None = None,
+    resolve_conditionals: bool = True,
 ) -> Document:
     parser = _Parser(
         text,
         source=source,
         env=os.environ if env is None else env,
+        resolve_conditionals=resolve_conditionals,
     )
     return parser.parse_document()
 
@@ -146,9 +150,11 @@ class _Parser:
         *,
         source: str,
         env: Mapping[str, str],
+        resolve_conditionals: bool = True,
     ) -> None:
         self.source = source
         self.env = env
+        self.resolve_conditionals = resolve_conditionals
         self.lines = _split_lines(text)
         self.i = 0
         self.seen_section = False
@@ -189,8 +195,14 @@ class _Parser:
                     var = rest.strip()
                     if not var or not _is_ident(var):
                         raise self.error(f"@{op} requires an environment variable name", lineno)
-                    taken = env_is_set(self.env, var)
-                    inner_active = active and (taken if op == "ifdef" else not taken)
+
+                    if self.resolve_conditionals:
+                        taken = env_is_set(self.env, var)
+                        inner_active = active and (taken if op == "ifdef" else not taken)
+                    else:
+                        # Preserve conditional bodies for conversion.
+                        inner_active = active
+
                     body = self._parse_conditional_body(inner_active)
                     if active:
                         node: Stmt = (

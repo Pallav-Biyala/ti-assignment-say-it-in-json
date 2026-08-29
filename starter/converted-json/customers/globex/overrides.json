@@ -1,0 +1,50 @@
+{
+  "format": "pfcfg-json/v1",
+  "source": "/media/sf_Linux/ti-assignment-say-it-in-json/starter/configs/customers/globex/overrides.pfcfg",
+  "body": [
+    {
+      "op": "include_once",
+      "path": "../../_base/defaults.pfcfg"
+    },
+    {
+      "op": "set",
+      "section": "build",
+      "key": "parallel",
+      "value": {
+        "lit": "true"
+      }
+    },
+    {
+      "op": "set",
+      "section": "build",
+      "key": "timeout_minutes",
+      "value": {
+        "lit": "30"
+      }
+    },
+    {
+      "op": "set",
+      "section": "cache",
+      "key": "enabled",
+      "value": {
+        "lit": "false"
+      }
+    },
+    {
+      "op": "set",
+      "section": "notify",
+      "key": "on_failure",
+      "value": {
+        "lit": "log"
+      }
+    },
+    {
+      "op": "set",
+      "section": "deploy",
+      "key": "requires_approval",
+      "value": {
+        "lit": "false"
+      }
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "format": "pfcfg-json/v1",
+  "source": "/media/sf_Linux/ti-assignment-say-it-in-json/starter/configs/edge-cases/conditional-includes.pfcfg",
+  "body": [
+    {
+      "op": "ifdef",
+      "var": "FEATURE_BETA",
+      "body": [
+        {
+          "op": "include",
+          "path": "../templates/node-build.pfcfg"
+        }
+      ]
+    },
+    {
+      "op": "ifndef",
+      "var": "FEATURE_BETA",
+      "body": [
+        {
+          "op": "include",
+          "path": "../_base/defaults.pfcfg"
+        },
+        {
+          "op": "set",
+          "section": "build",
+          "key": "steps",
+          "value": {
+            "lit": "legacy-compile,legacy-test"
+          }
+        }
+      ]
+    },
+    {
+      "op": "set",
+      "section": "feature",
+      "key": "beta_enabled",
+      "value": {
+        "lit": "false"
+      }
+    },
+    {
+      "op": "ifdef",
+      "var": "FEATURE_BETA",
+      "body": [
+        {
+          "op": "set",
+          "section": "feature",
+          "key": "beta_enabled",
+          "value": {
+            "lit": "true"
+          }
+        }
+      ]
+    },
+    {
+      "op": "set",
+      "section": "migration",
+      "key": "api_endpoint",
+      "value": {
+        "env": "REQUIRED_API_ENDPOINT"
+      }
+    },
+    {
+      "op": "set",
+      "section": "migration",
+      "key": "fallback_endpoint",
+      "value": {
+        "env": "OPTIONAL_API_ENDPOINT",
+        "default": {
+          "ref": {
+            "section": "migration",
+            "key": "api_endpoint"
+          }
+        }
+      }
+    },
+    {
+      "op": "ifdef",
+      "var": "MIGRATION_AUDIT",
+      "body": [
+        {
+          "op": "set",
+          "section": "audit",
+          "key": "requested_by",
+          "value": {
+            "env": "MIGRATION_AUDIT_USER",
+            "default": {
+              "lit": "unknown"
+            }
+          }
+        },
+        {
+          "op": "set",
+          "section": "audit",
+          "key": "ticket",
+          "value": {
+            "env": "MIGRATION_AUDIT_TICKET"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "format": "pfcfg-json/v1",
+  "source": "/media/sf_Linux/ti-assignment-say-it-in-json/starter/configs/templates/container-publish.pfcfg",
+  "body": [
+    {
+      "op": "include",
+      "path": "node-build.pfcfg"
+    },
+    {
+      "op": "set",
+      "section": "template",
+      "key": "name",
+      "value": {
+        "lit": "container-publish"
+      }
+    },
+    {
+      "op": "set",
+      "section": "template",
+      "key": "extends",
+      "value": {
+        "lit": "node-build"
+      }
+    },
+    {
+      "op": "set",
+      "section": "container",
+      "key": "registry",
+      "value": {
+        "env": "CONTAINER_REGISTRY",
+        "default": {
+          "lit": "registry.example.invalid"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "container",
+      "key": "repository",
+      "value": {
+        "env": "CONTAINER_REPO",
+        "default": {
+          "lit": "app"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "container",
+      "key": "tag",
+      "value": {
+        "env": "GIT_SHA",
+        "default": {
+          "lit": "latest"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "container",
+      "key": "dockerfile",
+      "value": {
+        "env": "DOCKERFILE",
+        "default": {
+          "lit": "Dockerfile"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "container.build",
+      "key": "context",
+      "value": {
+        "lit": "."
+      }
+    },
+    {
+      "op": "set",
+      "section": "container.build",
+      "key": "platforms",
+      "value": {
+        "env": "BUILD_PLATFORMS",
+        "default": {
+          "lit": "linux/amd64"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "container.build",
+      "key": "push",
+      "value": {
+        "lit": "false"
+      }
+    },
+    {
+      "op": "ifdef",
+      "var": "CI",
+      "body": [
+        {
+          "op": "set",
+          "section": "container.build",
+          "key": "push",
+          "value": {
+            "lit": "true"
+          }
+        }
+      ]
+    },
+    {
+      "op": "set",
+      "section": "deploy",
+      "key": "strategy",
+      "value": {
+        "lit": "rolling"
+      }
+    },
+    {
+      "op": "set",
+      "section": "deploy",
+      "key": "requires_approval",
+      "value": {
+        "env": "DEPLOY_APPROVAL",
+        "default": {
+          "lit": "true"
+        }
+      }
+    }
+  ]
+}

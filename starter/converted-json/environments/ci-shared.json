@@ -1,0 +1,62 @@
+{
+  "format": "pfcfg-json/v1",
+  "source": "/media/sf_Linux/ti-assignment-say-it-in-json/starter/configs/environments/ci-shared.pfcfg",
+  "body": [
+    {
+      "op": "ifdef",
+      "var": "CI",
+      "body": [
+        {
+          "op": "set",
+          "section": "build",
+          "key": "parallel",
+          "value": {
+            "lit": "true"
+          }
+        },
+        {
+          "op": "set",
+          "section": "build",
+          "key": "retry_count",
+          "value": {
+            "lit": "0"
+          }
+        },
+        {
+          "op": "set",
+          "section": "cache",
+          "key": "key_prefix",
+          "value": {
+            "concat": [
+              {
+                "lit": "ci-"
+              },
+              {
+                "env": "CACHE_NAMESPACE",
+                "default": {
+                  "lit": "shared"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "op": "set",
+          "section": "artifacts",
+          "key": "retention_days",
+          "value": {
+            "lit": "7"
+          }
+        },
+        {
+          "op": "set",
+          "section": "notify",
+          "key": "on_failure",
+          "value": {
+            "lit": "email,slack"
+          }
+        }
+      ]
+    }
+  ]
+}

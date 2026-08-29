@@ -1,0 +1,110 @@
+{
+  "format": "pfcfg-json/v1",
+  "source": "/media/sf_Linux/ti-assignment-say-it-in-json/starter/configs/_base/defaults.pfcfg",
+  "body": [
+    {
+      "op": "include_once",
+      "path": "toolchains.pfcfg"
+    },
+    {
+      "op": "include_once",
+      "path": "notifications.pfcfg"
+    },
+    {
+      "op": "set",
+      "section": "meta",
+      "key": "format_version",
+      "value": {
+        "lit": "3"
+      }
+    },
+    {
+      "op": "set",
+      "section": "meta",
+      "key": "platform",
+      "value": {
+        "lit": "pipelineforge"
+      }
+    },
+    {
+      "op": "set",
+      "section": "build",
+      "key": "timeout_minutes",
+      "value": {
+        "lit": "45"
+      }
+    },
+    {
+      "op": "set",
+      "section": "build",
+      "key": "retry_count",
+      "value": {
+        "lit": "1"
+      }
+    },
+    {
+      "op": "set",
+      "section": "build",
+      "key": "image",
+      "value": {
+        "env": "PF_BUILD_IMAGE",
+        "default": {
+          "lit": "pfci/builder:22.04"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "build",
+      "key": "parallel",
+      "value": {
+        "lit": "false"
+      }
+    },
+    {
+      "op": "set",
+      "section": "cache",
+      "key": "enabled",
+      "value": {
+        "lit": "true"
+      }
+    },
+    {
+      "op": "set",
+      "section": "cache",
+      "key": "key_prefix",
+      "value": {
+        "concat": [
+          {
+            "env": "CI",
+            "alternate": {
+              "lit": "ci-"
+            }
+          },
+          {
+            "env": "CACHE_NAMESPACE",
+            "default": {
+              "lit": "default"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "op": "set",
+      "section": "artifacts",
+      "key": "retention_days",
+      "value": {
+        "lit": "14"
+      }
+    },
+    {
+      "op": "set",
+      "section": "artifacts",
+      "key": "compress",
+      "value": {
+        "lit": "true"
+      }
+    }
+  ]
+}

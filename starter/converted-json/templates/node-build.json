@@ -1,0 +1,119 @@
+{
+  "format": "pfcfg-json/v1",
+  "source": "/media/sf_Linux/ti-assignment-say-it-in-json/starter/configs/templates/node-build.pfcfg",
+  "body": [
+    {
+      "op": "include",
+      "path": "../_base/defaults.pfcfg"
+    },
+    {
+      "op": "set",
+      "section": "template",
+      "key": "name",
+      "value": {
+        "lit": "node-build"
+      }
+    },
+    {
+      "op": "set",
+      "section": "template",
+      "key": "language",
+      "value": {
+        "lit": "node"
+      }
+    },
+    {
+      "op": "set",
+      "section": "build",
+      "key": "steps",
+      "value": {
+        "lit": "install,lint,test,build"
+      }
+    },
+    {
+      "op": "set",
+      "section": "build",
+      "key": "install_cmd",
+      "value": {
+        "ref": {
+          "section": "toolchain.node",
+          "key": "install_cmd"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "build",
+      "key": "node_version",
+      "value": {
+        "ref": {
+          "section": "toolchain.node",
+          "key": "version"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "build.env",
+      "key": "NODE_ENV",
+      "value": {
+        "env": "NODE_ENV",
+        "default": {
+          "lit": "test"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "build.env",
+      "key": "CI",
+      "value": {
+        "env": "CI",
+        "default": {
+          "lit": "false"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "test",
+      "key": "runner",
+      "value": {
+        "env": "TEST_RUNNER",
+        "default": {
+          "lit": "jest"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "test",
+      "key": "coverage_threshold",
+      "value": {
+        "env": "COVERAGE_MIN",
+        "default": {
+          "lit": "80"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "lint",
+      "key": "tool",
+      "value": {
+        "lit": "eslint"
+      }
+    },
+    {
+      "op": "set",
+      "section": "lint",
+      "key": "fail_on_warning",
+      "value": {
+        "env": "LINT_STRICT",
+        "default": {
+          "lit": "false"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "format": "pfcfg-json/v1",
+  "source": "/media/sf_Linux/ti-assignment-say-it-in-json/starter/configs/_base/toolchains.pfcfg",
+  "body": [
+    {
+      "op": "set",
+      "section": "toolchain.node",
+      "key": "version",
+      "value": {
+        "env": "NODE_VERSION",
+        "default": {
+          "lit": "20"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "toolchain.node",
+      "key": "binary",
+      "value": {
+        "lit": "node"
+      }
+    },
+    {
+      "op": "set",
+      "section": "toolchain.node",
+      "key": "package_manager",
+      "value": {
+        "env": "PKG_MGR",
+        "default": {
+          "lit": "npm"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "toolchain.node",
+      "key": "install_cmd",
+      "value": {
+        "concat": [
+          {
+            "env": "PKG_MGR",
+            "default": {
+              "lit": "npm"
+            }
+          },
+          {
+            "lit": " ci"
+          }
+        ]
+      }
+    },
+    {
+      "op": "set",
+      "section": "toolchain.go",
+      "key": "version",
+      "value": {
+        "env": "GO_VERSION",
+        "default": {
+          "lit": "1.22"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "toolchain.go",
+      "key": "module_mode",
+      "value": {
+        "lit": "on"
+      }
+    },
+    {
+      "op": "set",
+      "section": "toolchain.rust",
+      "key": "version",
+      "value": {
+        "env": "RUST_VERSION",
+        "default": {
+          "lit": "stable"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "toolchain.rust",
+      "key": "target",
+      "value": {
+        "env": "RUST_TARGET",
+        "default": {
+          "lit": "x86_64-unknown-linux-gnu"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "toolchain.default",
+      "key": "name",
+      "value": {
+        "lit": "node"
+      }
+    },
+    {
+      "op": "set",
+      "section": "toolchain.default",
+      "key": "compiler",
+      "value": {
+        "ref": {
+          "section": "toolchain.node",
+          "key": "binary"
+        }
+      }
+    }
+  ]
+}

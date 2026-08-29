@@ -1,0 +1,86 @@
+{
+  "format": "pfcfg-json/v1",
+  "source": "/media/sf_Linux/ti-assignment-say-it-in-json/starter/configs/_base/notifications.pfcfg",
+  "body": [
+    {
+      "op": "set",
+      "section": "notify",
+      "key": "on_success",
+      "value": {
+        "env": "NOTIFY_SUCCESS",
+        "default": {
+          "lit": "log"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "notify",
+      "key": "on_failure",
+      "value": {
+        "env": "NOTIFY_FAILURE",
+        "default": {
+          "lit": "email"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "notify.email",
+      "key": "recipients",
+      "value": {
+        "env": "BUILD_NOTIFY_LIST",
+        "default": {
+          "lit": "ops@example.invalid"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "notify.email",
+      "key": "from",
+      "value": {
+        "lit": "pipelineforge-noreply@example.invalid"
+      }
+    },
+    {
+      "op": "ifdef",
+      "var": "SLACK_WEBHOOK",
+      "body": [
+        {
+          "op": "set",
+          "section": "notify.slack",
+          "key": "enabled",
+          "value": {
+            "lit": "true"
+          }
+        },
+        {
+          "op": "set",
+          "section": "notify.slack",
+          "key": "channel",
+          "value": {
+            "env": "SLACK_CHANNEL",
+            "default": {
+              "lit": "#builds"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "op": "ifndef",
+      "var": "SLACK_WEBHOOK",
+      "body": [
+        {
+          "op": "set",
+          "section": "notify.slack",
+          "key": "enabled",
+          "value": {
+            "lit": "false"
+          }
+        }
+      ]
+    }
+  ]
+}

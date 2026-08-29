@@ -1,0 +1,114 @@
+{
+  "format": "pfcfg-json/v1",
+  "source": "/media/sf_Linux/ti-assignment-say-it-in-json/starter/configs/customers/acme-corp/pipeline.pfcfg",
+  "body": [
+    {
+      "op": "include",
+      "path": "../../templates/container-publish.pfcfg"
+    },
+    {
+      "op": "include",
+      "path": "staging.pfcfg"
+    },
+    {
+      "op": "set",
+      "section": "customer",
+      "key": "id",
+      "value": {
+        "lit": "acme-corp"
+      }
+    },
+    {
+      "op": "set",
+      "section": "customer",
+      "key": "tier",
+      "value": {
+        "lit": "enterprise"
+      }
+    },
+    {
+      "op": "set",
+      "section": "build",
+      "key": "timeout_minutes",
+      "value": {
+        "lit": "90"
+      }
+    },
+    {
+      "op": "set",
+      "section": "build",
+      "key": "parallel",
+      "value": {
+        "lit": "true"
+      }
+    },
+    {
+      "op": "set",
+      "section": "container",
+      "key": "repository",
+      "value": {
+        "lit": "acme-portal"
+      }
+    },
+    {
+      "op": "set",
+      "section": "container",
+      "key": "tag",
+      "value": {
+        "env": "ACME_RELEASE_TAG",
+        "default": {
+          "concat": [
+            {
+              "ref": {
+                "section": "build",
+                "key": "node_version"
+              }
+            },
+            {
+              "lit": "-"
+            },
+            {
+              "env": "GIT_SHA",
+              "default": {
+                "lit": "dev"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "deploy",
+      "key": "target",
+      "value": {
+        "env": "ACME_DEPLOY_TARGET",
+        "default": {
+          "lit": "staging"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "deploy",
+      "key": "requires_approval",
+      "value": {
+        "lit": "true"
+      }
+    },
+    {
+      "op": "ifdef",
+      "var": "ACME_DEPLOY_TARGET",
+      "body": [
+        {
+          "op": "set",
+          "section": "deploy",
+          "key": "requires_approval",
+          "value": {
+            "lit": "false"
+          }
+        }
+      ]
+    }
+  ]
+}

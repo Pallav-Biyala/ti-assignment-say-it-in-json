@@ -1,0 +1,70 @@
+{
+  "format": "pfcfg-json/v1",
+  "source": "/media/sf_Linux/ti-assignment-say-it-in-json/starter/configs/customers/acme-corp/staging.pfcfg",
+  "body": [
+    {
+      "op": "set",
+      "section": "staging",
+      "key": "enabled",
+      "value": {
+        "lit": "true"
+      }
+    },
+    {
+      "op": "set",
+      "section": "staging",
+      "key": "url",
+      "value": {
+        "lit": "https://staging.acme.example.invalid"
+      }
+    },
+    {
+      "op": "set",
+      "section": "deploy",
+      "key": "strategy",
+      "value": {
+        "lit": "blue-green"
+      }
+    },
+    {
+      "op": "set",
+      "section": "deploy",
+      "key": "target",
+      "value": {
+        "lit": "staging"
+      }
+    },
+    {
+      "op": "set",
+      "section": "notify",
+      "key": "on_success",
+      "value": {
+        "lit": "slack"
+      }
+    },
+    {
+      "op": "set",
+      "section": "notify",
+      "key": "on_failure",
+      "value": {
+        "lit": "slack,email"
+      }
+    },
+    {
+      "op": "set",
+      "section": "notify.slack",
+      "key": "channel",
+      "value": {
+        "lit": ""
+      }
+    },
+    {
+      "op": "set",
+      "section": "cache",
+      "key": "key_prefix",
+      "value": {
+        "lit": "acme-staging-"
+      }
+    }
+  ]
+}

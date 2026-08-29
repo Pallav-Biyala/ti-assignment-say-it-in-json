@@ -1,0 +1,141 @@
+{
+  "format": "pfcfg-json/v1",
+  "source": "/media/sf_Linux/ti-assignment-say-it-in-json/starter/configs/edge-cases/interpolation-cascade.pfcfg",
+  "body": [
+    {
+      "op": "include",
+      "path": "../_base/defaults.pfcfg"
+    },
+    {
+      "op": "set",
+      "section": "cascade",
+      "key": "alpha",
+      "value": {
+        "env": "CASCADE_ALPHA",
+        "default": {
+          "lit": "unset"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "cascade",
+      "key": "beta",
+      "value": {
+        "concat": [
+          {
+            "lit": "prefix-"
+          },
+          {
+            "ref": {
+              "section": "cascade",
+              "key": "alpha"
+            }
+          },
+          {
+            "lit": "-suffix"
+          }
+        ]
+      }
+    },
+    {
+      "op": "set",
+      "section": "cascade",
+      "key": "gamma",
+      "value": {
+        "env": "CASCADE_GAMMA",
+        "default": {
+          "ref": {
+            "section": "cascade",
+            "key": "beta"
+          }
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "cascade",
+      "key": "delta",
+      "value": {
+        "env": "CASCADE_DELTA",
+        "default": {
+          "concat": [
+            {
+              "ref": {
+                "section": "cascade",
+                "key": "gamma"
+              }
+            },
+            {
+              "lit": "-final"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "cascade",
+      "key": "epsilon",
+      "value": {
+        "concat": [
+          {
+            "lit": "local-"
+          },
+          {
+            "ref": {
+              "section": "cascade",
+              "key": "delta"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "op": "ifdef",
+      "var": "CI",
+      "body": [
+        {
+          "op": "set",
+          "section": "cascade",
+          "key": "epsilon",
+          "value": {
+            "concat": [
+              {
+                "lit": "ci-"
+              },
+              {
+                "ref": {
+                  "section": "cascade",
+                  "key": "delta"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "op": "set",
+      "section": "cascade.loop",
+      "key": "a",
+      "value": {
+        "ref": {
+          "section": "cascade.loop",
+          "key": "b"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "cascade.loop",
+      "key": "b",
+      "value": {
+        "ref": {
+          "section": "cascade.loop",
+          "key": "a"
+        }
+      }
+    }
+  ]
+}

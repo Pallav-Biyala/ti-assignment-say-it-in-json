@@ -1,0 +1,104 @@
+{
+  "format": "pfcfg-json/v1",
+  "source": "/media/sf_Linux/ti-assignment-say-it-in-json/starter/configs/customers/globex/pipeline.pfcfg",
+  "body": [
+    {
+      "op": "include",
+      "path": "../../_base/defaults.pfcfg"
+    },
+    {
+      "op": "include",
+      "path": "../../environments/ci-shared.pfcfg"
+    },
+    {
+      "op": "ifdef",
+      "var": "PRODUCTION",
+      "body": [
+        {
+          "op": "include",
+          "path": "../../environments/on-prem.pfcfg"
+        }
+      ]
+    },
+    {
+      "op": "ifndef",
+      "var": "PRODUCTION",
+      "body": [
+        {
+          "op": "include",
+          "path": "overrides.pfcfg"
+        }
+      ]
+    },
+    {
+      "op": "set",
+      "section": "customer",
+      "key": "id",
+      "value": {
+        "lit": "globex"
+      }
+    },
+    {
+      "op": "set",
+      "section": "customer",
+      "key": "tier",
+      "value": {
+        "lit": "standard"
+      }
+    },
+    {
+      "op": "set",
+      "section": "build",
+      "key": "steps",
+      "value": {
+        "lit": "compile,test,package"
+      }
+    },
+    {
+      "op": "set",
+      "section": "build",
+      "key": "language",
+      "value": {
+        "lit": "go"
+      }
+    },
+    {
+      "op": "set",
+      "section": "build",
+      "key": "go_version",
+      "value": {
+        "ref": {
+          "section": "toolchain.go",
+          "key": "version"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "package",
+      "key": "format",
+      "value": {
+        "lit": "tar.gz"
+      }
+    },
+    {
+      "op": "set",
+      "section": "package",
+      "key": "output_dir",
+      "value": {
+        "lit": "dist/"
+      }
+    },
+    {
+      "op": "set",
+      "section": "deploy",
+      "key": "target",
+      "value": {
+        "env": "GLOBEX_ENV",
+        "default": {
+          "lit": "development"
+        }
+      }
+    }
+  ]
+}

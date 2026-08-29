@@ -1,0 +1,141 @@
+{
+  "format": "pfcfg-json/v1",
+  "source": "/media/sf_Linux/ti-assignment-say-it-in-json/starter/configs/customers/initech/pipeline.pfcfg",
+  "body": [
+    {
+      "op": "include",
+      "path": "../../templates/node-build.pfcfg"
+    },
+    {
+      "op": "include",
+      "path": "secrets.pfcfg"
+    },
+    {
+      "op": "set",
+      "section": "customer",
+      "key": "id",
+      "value": {
+        "lit": "initech"
+      }
+    },
+    {
+      "op": "set",
+      "section": "customer",
+      "key": "tier",
+      "value": {
+        "lit": "enterprise"
+      }
+    },
+    {
+      "op": "set",
+      "section": "build",
+      "key": "compiler_path",
+      "value": {
+        "concat": [
+          {
+            "lit": "/usr/local/bin/"
+          },
+          {
+            "ref": {
+              "section": "toolchain.default",
+              "key": "compiler"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "op": "set",
+      "section": "build",
+      "key": "effective_toolchain",
+      "value": {
+        "ref": {
+          "section": "toolchain.default",
+          "key": "name"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "signing",
+      "key": "key_id",
+      "value": {
+        "env": "SIGNING_KEY_ID",
+        "default": {
+          "lit": "initech-default"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "signing",
+      "key": "algorithm",
+      "value": {
+        "env": "SIGNING_ALG",
+        "default": {
+          "lit": "ed25519"
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "signing",
+      "key": "public_key_url",
+      "value": {
+        "concat": [
+          {
+            "ref": {
+              "section": "signing",
+              "key": "key_id"
+            }
+          },
+          {
+            "lit": ".keys.example.invalid"
+          }
+        ]
+      }
+    },
+    {
+      "op": "set",
+      "section": "release",
+      "key": "version",
+      "value": {
+        "env": "RELEASE_VERSION",
+        "default": {
+          "concat": [
+            {
+              "lit": "0.0.0-"
+            },
+            {
+              "ref": {
+                "section": "build",
+                "key": "node_version"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "op": "set",
+      "section": "release",
+      "key": "bundle_name",
+      "value": {
+        "concat": [
+          {
+            "lit": "initech-"
+          },
+          {
+            "ref": {
+              "section": "release",
+              "key": "version"
+            }
+          },
+          {
+            "lit": ".tar.gz"
+          }
+        ]
+      }
+    }
+  ]
+}

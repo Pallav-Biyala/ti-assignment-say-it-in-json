@@ -1,0 +1,78 @@
+{
+  "format": "pfcfg-json/v1",
+  "source": "/media/sf_Linux/ti-assignment-say-it-in-json/starter/configs/environments/on-prem.pfcfg",
+  "body": [
+    {
+      "op": "set",
+      "section": "deploy",
+      "key": "strategy",
+      "value": {
+        "lit": "manual"
+      }
+    },
+    {
+      "op": "set",
+      "section": "deploy",
+      "key": "requires_approval",
+      "value": {
+        "lit": "true"
+      }
+    },
+    {
+      "op": "set",
+      "section": "deploy",
+      "key": "target",
+      "value": {
+        "lit": "on-prem"
+      }
+    },
+    {
+      "op": "set",
+      "section": "container",
+      "key": "registry",
+      "value": {
+        "lit": "registry.globex.internal"
+      }
+    },
+    {
+      "op": "set",
+      "section": "container",
+      "key": "push",
+      "value": {
+        "lit": "false"
+      }
+    },
+    {
+      "op": "set",
+      "section": "build",
+      "key": "image",
+      "value": {
+        "lit": "pfci/builder:enterprise-rhel8"
+      }
+    },
+    {
+      "op": "set",
+      "section": "notify",
+      "key": "on_success",
+      "value": {
+        "lit": "email"
+      }
+    },
+    {
+      "op": "set",
+      "section": "notify",
+      "key": "on_failure",
+      "value": {
+        "lit": "email,pager"
+      }
+    },
+    {
+      "op": "set",
+      "section": "notify.email",
+      "key": "recipients",
+      "value": {
+        "lit": "sre@globex.example.invalid,release@globex.example.invalid"
+      }
+    }
+  ]
+}
