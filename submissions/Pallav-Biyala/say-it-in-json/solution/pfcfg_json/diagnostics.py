@@ -68,7 +68,6 @@ class Diagnostic:
         return self.code in (
             DiagnosticCode.UNMIGRATABLE_ENV_NO_DEFAULT,
             DiagnosticCode.UNMIGRATABLE_DYNAMIC_REF,
-            DiagnosticCode.CIRCULAR_REF,
         )
 
 

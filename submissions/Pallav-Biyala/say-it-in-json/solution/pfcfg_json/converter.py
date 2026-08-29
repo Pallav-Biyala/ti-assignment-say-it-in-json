@@ -190,7 +190,11 @@ def convert_tree(
     for pfcfg in sorted(all_pfcfg):
         rel_str = str(pfcfg)
         try:
-            doc = parse_file(pfcfg, env=env_map)
+            doc = parse_file(
+                pfcfg,
+                env=env_map,
+                resolve_conditionals=False,
+            )
         except ParseError as exc:
             report.add(Diagnostic(
                 code=DiagnosticCode.PARSE_ERROR,
@@ -223,7 +227,11 @@ def convert_single(
     path = Path(pfcfg_path)
     src = source_name if source_name is not None else path.as_posix()
     try:
-        doc = parse_file(path, env=env_map)
+        doc = parse_file(
+            path,
+            env=env_map,
+            resolve_conditionals=False,
+        )
     except ParseError as exc:
         report.add(Diagnostic(
             code=DiagnosticCode.PARSE_ERROR,

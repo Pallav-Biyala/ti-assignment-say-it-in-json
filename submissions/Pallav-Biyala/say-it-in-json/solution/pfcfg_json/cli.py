@@ -126,7 +126,13 @@ def _cmd_report(args: argparse.Namespace) -> int:
         print(f"error: source {src} is not a directory", file=sys.stderr)
         return 2
 
-    result = convert_tree(src, dst if dst else Path(src.parent / "converted-json"), entry_points=ENTRY_CONFIGS_RELATIVE)
+    conversion_root = src.parent / "converted-json"
+
+    result = convert_tree(
+        src,
+        conversion_root,
+        entry_points=ENTRY_CONFIGS_RELATIVE,
+    )
     items = result.report.to_list()
 
     if args.format == "ndjson":

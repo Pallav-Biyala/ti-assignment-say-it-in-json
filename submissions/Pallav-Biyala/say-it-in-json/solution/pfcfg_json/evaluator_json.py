@@ -38,10 +38,20 @@ from .model import (
     Stmt,
     Value,
     document_from_json,
-    env_is_set,
 )
 
 DEFAULT_EXPANSION_PASS_LIMIT = 100
+
+
+def env_is_set(env: Mapping[str, str], var: str) -> bool:
+    """Generic env-set check: set AND non-empty.
+
+    Defined locally on purpose so this JSON evaluator remains completely
+    independent of the legacy .pfcfg parser (solution.pfcfg_json.parser).
+    Semantics match the legacy parser exactly.
+    """
+    value = env.get(var)
+    return value is not None and value != ""
 
 
 class JsonEvalError(Exception):
